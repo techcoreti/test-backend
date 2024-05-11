@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { MessagesErrors } from 'src/commons/constants/messages.errors';
 import { CultivationEntity } from 'src/domain/entities/cultivation.entity';
 import { ICultivationRepository } from 'src/domain/interfaces/repositories/cultivation.repository';
 import { CreateCultivationDto } from 'src/modules/cultivation/api/dtos/create.cultivation.dto';
@@ -25,7 +26,7 @@ export class CultivationRepository implements ICultivationRepository {
       });
     } catch (error) {
       this.logger.error(error);
-      this.logger.error('Erro ao cadastrar o cultivo.');
+      this.logger.error(MessagesErrors(undefined).errorPostRecord);
       throw new BadRequestException();
     }
   }
@@ -41,7 +42,7 @@ export class CultivationRepository implements ICultivationRepository {
       );
     } catch (error) {
       this.logger.error(error);
-      this.logger.error('Erro ao atualizar o cultivo.');
+      this.logger.error(MessagesErrors(undefined).errorUpdateRecord);
       throw new BadRequestException();
     }
   }
@@ -53,7 +54,7 @@ export class CultivationRepository implements ICultivationRepository {
       });
     } catch (error) {
       this.logger.error(error);
-      this.logger.error('Erro ao excluir o cultivo.');
+      this.logger.error(MessagesErrors(undefined).errorDeleteRecord);
       throw new BadRequestException();
     }
   }
@@ -70,7 +71,7 @@ export class CultivationRepository implements ICultivationRepository {
       });
     } catch (error) {
       this.logger.error(error);
-      this.logger.error('Erro ao excluir o cultivo.');
+      this.logger.error(MessagesErrors(undefined).errorGetRecord);
       throw new BadRequestException();
     }
   }
@@ -81,7 +82,7 @@ export class CultivationRepository implements ICultivationRepository {
       });
     } catch (error) {
       this.logger.error(error);
-      this.logger.error('Erro ao excluir o cultivo.');
+      this.logger.error(MessagesErrors(undefined).errorGetRecord);
       throw new BadRequestException();
     }
   }

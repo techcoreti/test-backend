@@ -8,6 +8,6 @@ export const hectareCalcArea = (
 ) => {
   const total = data.totalVegetationArea + data.totalArableArea;
   if (total > data.totalHectareArea) {
-    throw new BadGatewayException(MessagesWarning().totalAreaMinor);
+    throw new BadGatewayException(MessagesWarning(null).totalAreaMinor);
   }
 };

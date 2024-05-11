@@ -8,6 +8,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   MessagesErrors,
+  MessagesInfos,
   MessagesWarning,
 } from 'src/commons/constants/messages.errors';
 import { ProducersEntity } from 'src/domain/entities/producers.entity';
@@ -39,7 +40,7 @@ export class ProducersRepository implements IProducersRepository {
           )
         ) {
           this.logger.error('Já existe um produtor com este documento.');
-          throw new ConflictException(MessagesErrors(undefined).dbConflict);
+          throw new ConflictException(MessagesWarning(null).errorConflict);
         }
       } else {
         this.logger.log('Erro ao cadastrar o produtor.');
@@ -47,16 +48,14 @@ export class ProducersRepository implements IProducersRepository {
       }
     }
   }
-
   async update(id: string, data: UpdateProducersDto): Promise<any> {
     try {
       const result = await this.repository.update(id, data);
 
       if (result.affected === 0) {
-        this.logger.log(MessagesWarning().dbPorducerNotUpdated);
-        return { message: MessagesWarning().dbPorducerNotUpdated };
+        this.logger.log(MessagesWarning(null).recordNotUpdate);
+        return { message: MessagesWarning(null).recordNotUpdate };
       }
-      return { message: MessagesWarning().dbProducerUpdated };
     } catch (error) {
       if (error instanceof TypeORMError) {
         if (
@@ -65,7 +64,7 @@ export class ProducersRepository implements IProducersRepository {
           )
         ) {
           this.logger.error('Já existe um produtor com este documento.');
-          throw new ConflictException(MessagesErrors(undefined).dbConflict);
+          throw new ConflictException(MessagesWarning(null).errorConflict);
         }
       } else {
         this.logger.log('Erro ao atualizar o cadastro do produtor.');
@@ -73,17 +72,16 @@ export class ProducersRepository implements IProducersRepository {
       }
     }
   }
-
   async softDelete(id: string): Promise<any> {
     this.logger.log(`Deleting producer with id: ${id}`);
     try {
       const result = await this.repository.softDelete(id);
 
       if (result.affected === 0) {
-        this.logger.log(MessagesWarning().dbProducerNotDeleted);
-        return { message: MessagesWarning().dbProducerNotDeleted };
+        this.logger.log(MessagesWarning(null).recordDeleted);
+        return { message: MessagesWarning(null).recordDeleted };
       }
-      return { message: MessagesWarning().dbProducerDeleted };
+      return { message: MessagesInfos().producerDeleted };
     } catch (error) {
       if (error instanceof TypeORMError) {
         throw new InternalServerErrorException();
@@ -91,18 +89,16 @@ export class ProducersRepository implements IProducersRepository {
       throw error;
     }
   }
-
   async hardDelete(id: string): Promise<any> {
     this.logger.log(`Deleting producer with id: ${id}`);
     try {
       const result = await this.repository.delete(id);
 
-      // Se não deletou nenhum registro
       if (result.affected === 0) {
-        this.logger.log(MessagesWarning().dbProducerNotDeleted);
-        return { message: MessagesWarning().dbProducerNotDeleted };
+        this.logger.log(MessagesWarning(null).recordDeleted);
+        return { message: MessagesWarning(null).recordDeleted };
       }
-      return { message: MessagesWarning().dbProducerDeleted };
+      return { message: MessagesInfos().producerDeleted };
     } catch (error) {
       if (error instanceof TypeORMError) {
         throw new InternalServerErrorException();
@@ -112,19 +108,22 @@ export class ProducersRepository implements IProducersRepository {
   }
   async get(id: string): Promise<ViewProducerDto> {
     try {
-      return await this.repository.findOne({ where: { id } });
+      return await this.repository.findOne({
+        where: { id },
+        relations: ['cultivations'],
+      });
     } catch (error) {
       this.logger.error(error);
-      this.logger.error('Erro ao obter o registro.');
+      this.logger.error(MessagesErrors(null).errorGetRecord);
       throw new BadRequestException();
     }
   }
   async getAll(): Promise<ViewProducerDto[]> {
     try {
-      return await this.repository.find();
+      return await this.repository.find({ relations: ['cultivations'] });
     } catch (error) {
       this.logger.error(error);
-      this.logger.error('Erro ao obter o registro.');
+      this.logger.error(MessagesErrors(null).errorGetRecord);
       throw new BadRequestException();
     }
   }

@@ -12,7 +12,7 @@ export class ViewProducerDto implements IViewProducer {
   totalArableArea: number;
   totalVegetationArea: number;
   isActive: boolean;
-  cultivation: CultivationEntity[];
+  cultivations: CultivationEntity[];
   id: string;
   createdAt: Date;
   updatedAt: Date;

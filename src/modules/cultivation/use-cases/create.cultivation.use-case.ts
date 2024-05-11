@@ -1,4 +1,5 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { MessagesWarning } from 'src/commons/constants/messages.errors';
 import { ICultivationRepository } from 'src/domain/interfaces/repositories/cultivation.repository';
 import { ICreateCultivationUseCase } from 'src/domain/interfaces/use-cases/cultivation/create.cultivation.use-case';
 import { IGetProducersUseCase } from 'src/domain/interfaces/use-cases/producer/get.producers.use-case';
@@ -16,7 +17,8 @@ export class CreateCultivationUseCase implements ICreateCultivationUseCase {
     let totalActualCultivation: number = 0;
     try {
       const producer = await this.getProducersUseCase.execute(producerId);
-      if (producer === null) throw new Error('Producer not found');
+      if (producer === null)
+        throw new BadRequestException(MessagesWarning(null).recordNotFound);
       const cultivation = await this.cultivationRepository.getAll(producerId);
 
       // Obtem o total já plantado

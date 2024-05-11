@@ -37,7 +37,7 @@ export class ProducersEntity extends BaseEntity {
   isActive: boolean;
 
   @OneToMany(() => CultivationEntity, (e) => e.producer)
-  cultivation: CultivationEntity[];
+  cultivations: CultivationEntity[];
 
   @BeforeInsert()
   transformTypeDocument() {
@@ -54,7 +54,7 @@ export type ICreateProducer = Omit<
   | 'isActive'
   | 'typeDocument'
   | 'transformTypeDocument'
-  | 'cultivation'
+  | 'cultivations'
 >;
 export type IUpdateProducer = Omit<
   ProducersEntity,
@@ -65,7 +65,7 @@ export type IUpdateProducer = Omit<
   | 'document'
   | 'typeDocument'
   | 'transformTypeDocument'
-  | 'cultivation'
+  | 'cultivations'
 >;
 
 export type IViewProducer = Omit<

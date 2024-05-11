@@ -16,7 +16,7 @@ export class CultivationEntity extends BaseEntity {
   @Column({ name: 'is_active', type: 'boolean', default: true })
   isActive: boolean;
 
-  @ManyToOne(() => ProducersEntity, (e) => e.cultivation)
+  @ManyToOne(() => ProducersEntity, (e) => e.cultivations)
   @JoinColumn({ name: 'producer_id', foreignKeyConstraintName: 'id' })
   producer: ProducersEntity;
 }

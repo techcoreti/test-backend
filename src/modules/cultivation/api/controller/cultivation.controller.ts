@@ -8,6 +8,12 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import {
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { ICreateCultivationUseCase } from 'src/domain/interfaces/use-cases/cultivation/create.cultivation.use-case';
 import { IDeleteCultivationUseCase } from 'src/domain/interfaces/use-cases/cultivation/delete.cultivation.use-case';
 import { IGetCultivationUseCase } from 'src/domain/interfaces/use-cases/cultivation/get.cultivation.use-case';
@@ -18,6 +24,10 @@ import { CreateCultivationDto } from '../dtos/create.cultivation.dto';
 import { ViewCultivationDto } from '../dtos/view.cultivation.dto';
 
 @Controller('producers')
+@ApiTags('Cultivations')
+@ApiNotFoundResponse({
+  description: 'Card not found',
+})
 export class CultivationController {
   constructor(
     @Inject(ICreateCultivationUseCase)
@@ -32,6 +42,12 @@ export class CultivationController {
     private readonly getAllCultivationUseCase: IGetAllCultivationUseCase,
   ) {}
 
+  @ApiOkResponse()
+  @ApiOperation({
+    summary: 'Cria uma nova Cultura',
+    description:
+      'Efetua o cadastro validando todas as informações, inclusive verificando os valores em hectares informando, não permite usar uma área maior disponível na fazenda.',
+  })
   @Post('/:producer/cultivations')
   async create(
     @Param('producer') producerId: string,
@@ -39,6 +55,10 @@ export class CultivationController {
   ): Promise<any> {
     return this.createCultivationUseCase.execute(producerId, data);
   }
+  @ApiOkResponse()
+  @ApiOperation({
+    description: 'Atualiza os cadastros das Culturas.',
+  })
   @Patch(':producer/cultivations/:cultivation')
   async update(
     @Body() data: any,
@@ -51,6 +71,10 @@ export class CultivationController {
       data,
     );
   }
+  @ApiOkResponse()
+  @ApiOperation({
+    description: 'Exclui os cadastros das Culturas.',
+  })
   @Delete(':producer/cultivations/:cultivation')
   async delete(
     @Param('producer') producerId: string,
@@ -58,12 +82,20 @@ export class CultivationController {
   ): Promise<void> {
     return this.deleteCultivationUseCase.execute(producerId, cultivationId);
   }
+  @ApiOkResponse()
+  @ApiOperation({
+    description: 'Retorna os cadastro da Cultura informada.',
+  })
   @Get('/:producer/cultivations')
   async getCultivation(
     @Param('producer') producerId: string,
   ): Promise<ViewCultivationDto> {
     return this.getAllCultivationUseCase.execute(producerId);
   }
+  @ApiOkResponse()
+  @ApiOperation({
+    description: 'Lista todos os cadastros das Culturas.',
+  })
   @Get('/:producer/cultivations/:cultivation')
   async getAllCultivation(
     @Param('producer') producerId: string,
