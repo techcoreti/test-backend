@@ -31,7 +31,7 @@ Certifique-se de ter os seguintes pré-requisitos instalados na sua máquina:
 
 ## Migrações do Banco de Dados
 
-1. Com o banco de dados criado, execute as migrações para criar as tabelas necessárias. Utilize o seguinte comando: yarn migration:run
+1. Com o banco de dados criado, execute as migrações para criar as tabelas necessárias. Utilize o seguinte comando: **yarn migration:run**
 
 ## Executando a Aplicação
 
