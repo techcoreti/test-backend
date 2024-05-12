@@ -29,7 +29,9 @@ Certifique-se de ter os seguintes pré-requisitos instalados na sua máquina:
 sudo docker compose up -d
 ```
 
-4. Após o banco de dados estar em execução, crie o banco de dados executando o seguinte comando:
+4. Ajustar o arquivo env seguindo o modelo .env.example:
+
+5. Após o banco de dados estar em execução, crie o banco de dados executando o seguinte comando:
 ```
 yarn db:create
 ```
@@ -55,3 +57,15 @@ A documentação da API está disponível através do Swagger. Você pode acess�
 /docs/swagger
 ```
 
+## Breve descrição
+1. Foi utilizado o Framework NestJs para construção do teste, hoje é o que temos de melhor em desenvolvimento ágil com typescript.
+2. Utilizado o Clean Arch como base do desenvolvimento.
+3. Foi atendido os requisitos:
+	- O usuário deverá ter a possibilidade de cadastrar, editar, e excluir produtores rurais.
+	- O sistema deverá validar CPF e CNPJ digitados incorretamente.
+	- A soma de área agrícultável e vegetação, não deverá ser maior que a área total da fazenda
+	- Cada produtor pode plantar mais de uma cultura em sua Fazenda.
+4. Não é permitido cadastrar dois Produtores com o mesmo CNPJ ou CPF.
+5. Não é permitido cadastrar o mesmo Produtor com o mesmo nome e CNPJ/CPF
+6. Não permitido cadastrar um Produtor com uma área de plantio maior que a área disponivel em hectares (area total menos área da vegetação).
+7. Não é permitido cadastrar uma área de plantio maior que á área disponível em hectares, é somado o que já foi plantando com o que está sendo solicitado e se disponível, permite efetuar o cadastro.
