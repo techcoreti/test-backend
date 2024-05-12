@@ -24,24 +24,34 @@ Certifique-se de ter os seguintes pré-requisitos instalados na sua máquina:
 
 1. Antes de executar a aplicação, é necessário iniciar o banco de dados. Certifique-se de ter o Docker em execução.
 
-2. Para iniciar o banco de dados, execute o seguinte comando na raiz do projeto: sudo docker compose up -d
+2. Para iniciar o banco de dados, execute o seguinte comando na raiz do projeto:
+```
+sudo docker compose up -d
+```
 
-3. Após o banco de dados estar em execução, crie o banco de dados executando o seguinte comando: yarn db:create
-
-
+4. Após o banco de dados estar em execução, crie o banco de dados executando o seguinte comando:
+```
+yarn db:create
+```
 ## Migrações do Banco de Dados
 
 1. Com o banco de dados criado, execute as migrações para criar as tabelas necessárias. Utilize o seguinte comando:
 ```
-**yarn migration:run**
+yarn migration:run
 ```
 ## Executando a Aplicação
 
-Com as dependências instaladas e o banco de dados configurado, você está pronto para executar a aplicação. Utilize o seguinte comando: yarn start:dev
+Com as dependências instaladas e o banco de dados configurado, você está pronto para executar a aplicação. Utilize o seguinte comando: 
+```
+yarn start:dev
+```
 
 Isso iniciará a aplicação e estará pronta para uso.
 
 ## Documentação da API
 
-A documentação da API está disponível através do Swagger. Você pode acessá-la através do path: /docs/swagger 
+A documentação da API está disponível através do Swagger. Você pode acessá-la através do path: 
+```
+/docs/swagger
+```
 
